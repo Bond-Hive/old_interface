@@ -6,13 +6,13 @@
 1. Clone this repositoy:
 
 ```bash
-git clone https://github.com/leoMirandaa/shadcn-landing-page.git
+git clone https://github.com/Bond-Hive/interface.git
 ```
 
 2. Go into project
 
 ```bash
-cd shadcn-landing-page
+cd interface
 ```
 
 3. Install dependencies
