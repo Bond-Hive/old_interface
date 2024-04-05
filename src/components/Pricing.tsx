@@ -26,7 +26,7 @@ interface PricingProps {
 
 const pricingList: PricingProps[] = [
   {
-    title: "Free",
+    title: "BTC Futures",
     popular: 0,
     price: 0,
     description:
@@ -34,14 +34,10 @@ const pricingList: PricingProps[] = [
     buttonText: "Get Started",
     benefitList: [
       "1 Team member",
-      "2 GB Storage",
-      "Upto 4 pages",
-      "Community support",
-      "lorem ipsum dolor",
     ],
   },
   {
-    title: "Premium",
+    title: "ETH Futures",
     popular: 1,
     price: 5,
     description:
@@ -56,7 +52,7 @@ const pricingList: PricingProps[] = [
     ],
   },
   {
-    title: "Enterprise",
+    title: "SOL Futures",
     popular: 0,
     price: 40,
     description:
@@ -100,7 +96,7 @@ export const Pricing = () => {
                   </Badge>
                 ) : null}
               </CardTitle>
-              <div>
+              <div className="margin-">
                 <span className="text-3xl font-bold">${pricing.price}</span>
                 <span className="text-muted-foreground"> /month</span>
               </div>

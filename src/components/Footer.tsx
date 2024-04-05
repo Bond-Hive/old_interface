@@ -1,4 +1,4 @@
-import { LogoIcon } from "./Icons";
+import Logo from '../assets/logo.png';
 
 export const Footer = () => {
   return (
@@ -9,10 +9,10 @@ export const Footer = () => {
         <div className="col-span-full xl:col-span-2">
           <a
             href="/"
-            className="font-bold text-xl flex"
+            className="ml-2 font-bold text-xl flex items-center"
           >
-            <LogoIcon />
-            ShadcnUI/React
+            <img src={Logo} alt="Logo" className="logo" />
+            Bondhive
           </a>
         </div>
 
@@ -139,14 +139,7 @@ export const Footer = () => {
 
       <section className="container pb-14 text-center">
         <h3>
-          &copy; 2024 Landing page made by{" "}
-          <a
-            target="_blank"
-            href="https://github.com/leoMirandaa"
-            className="text-primary transition-all border-primary hover:border-b-2"
-          >
-            Leo Miranda
-          </a>
+          &copy; 2024 BondHive{" "}
         </h3>
       </section>
     </footer>
