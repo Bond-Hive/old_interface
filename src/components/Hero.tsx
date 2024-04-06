@@ -5,22 +5,21 @@ export const Hero = () => {
         <main className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
             <span className="inline bg-gradient-to-r from-[#F596D3]  to-[#D247BF] text-transparent bg-clip-text">
-              Shadcn
+              Maximize
             </span>{" "}
-            landing page
+            Your Investment Returns < br />
           </h1>{" "}
-          for{" "}
+          by{" "}
           <h2 className="inline">
+            Locking in Your Yield with
             <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              React
-            </span>{" "}
-            developers
+              {" "} Crypto Bonds
+            </span>
           </h2>
         </main>
 
         <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
-          Build your React landing page effortlessly with the required sections
-          to your project.
+          Crypto Yield Bond combines the benefits of futures spread trading and funding fees from major centralized cryptocurrency exchanges (CEXs), offering secure, high-yield returns locked in for investors.
         </p>
       </div>
     </section>
