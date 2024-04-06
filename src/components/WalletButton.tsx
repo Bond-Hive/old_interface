@@ -3,7 +3,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletModalButton, WalletDisconnectButton } from '@solana/wallet-adapter-react-ui';
 
 // Base styles for the button, unaltered for desktop view
-const buttonBaseStyle = `inline-flex items-center border border-transparent font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`;
+const buttonBaseStyle = `inline-flex items-center border border-transparent font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pb-16`;
 // Desktop styles
 const desktopStyle = `px-4 py-2 text-sm`;
 // Mobile adjustments: margin and padding adjustments for mobile view only
