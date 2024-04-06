@@ -4,11 +4,9 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Check } from "lucide-react";
 
 enum PopularPlanType {
   NO = 0,
@@ -18,63 +16,73 @@ enum PopularPlanType {
 interface PricingProps {
   title: string;
   popular: PopularPlanType;
-  price: number;
-  description: string;
-  buttonText: string;
-  benefitList: string[];
+  APY: string;
+  features: {
+    maturity: string;
+    min: string;
+    underlying: string;
+    depositAsset: string;
+  };
 }
 
 const pricingList: PricingProps[] = [
   {
-    title: "BTC Futures",
+    title: "BTC (June-24)",
+    APY: "20-22",
     popular: 0,
-    price: 0,
-    description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Get Started",
-    benefitList: [
-      "1 Team member",
-    ],
+    features: {
+      maturity: "2024-06-28",
+      min: "$100",
+      underlying: "BTC Futures and Spot",
+      depositAsset: "USDT or USDC",
+    },
   },
   {
-    title: "ETH Futures",
-    popular: 1,
-    price: 5,
-    description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Start Free Trial",
-    benefitList: [
-      "4 Team member",
-      "4 GB Storage",
-      "Upto 6 pages",
-      "Priority support",
-      "lorem ipsum dolor",
-    ],
+    title: "ETH (June-24)",
+    APY: "24-26",
+    popular: 0,
+    features: {
+      maturity: "2024-06-28",
+      min: "$100",
+      underlying: "ETH Futures and Spot",
+      depositAsset: "USDT or USDC",
+    },
   },
   {
-    title: "SOL Futures",
+    title: "BTC (Sep-24)",
+    APY: "21-23",
     popular: 0,
-    price: 40,
-    description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Contact US",
-    benefitList: [
-      "10 Team member",
-      "8 GB Storage",
-      "Upto 10 pages",
-      "Priority support",
-      "lorem ipsum dolor",
-    ],
+    features: {
+      maturity: "2024-09-27",
+      min: "$100",
+      underlying: "BTC Futures and Spot",
+      depositAsset: "USDT or USDC",
+    },
   },
+  {
+    title: "ETH (Sep-24)",
+    APY: "28-30",
+    popular: 0,
+    features: {
+      maturity: "2024-09-27",
+      min: "$100",
+      underlying: "ETH Futures and Spot",
+      depositAsset: "USDT or USDC",
+    },
+  }
 ];
 
 export const Pricing = () => {
+  const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <section
       id="pricing"
       className="container pt-10 sm:pt-24"
     >
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-2 gap-8">
         {pricingList.map((pricing: PricingProps) => (
           <Card
             key={pricing.title}
@@ -85,44 +93,20 @@ export const Pricing = () => {
             }
           >
             <CardHeader>
-              <CardTitle className="flex item-center justify-between">
+              <CardTitle className="flex items-center justify-between w-full">
                 {pricing.title}
-                {pricing.popular === PopularPlanType.YES ? (
-                  <Badge
-                    variant="secondary"
-                    className="text-sm text-primary"
-                  >
-                    Most popular
-                  </Badge>
-                ) : null}
+                <span>APY: {pricing.APY}%</span>
               </CardTitle>
-              <div className="margin-">
-                <span className="text-3xl font-bold">${pricing.price}</span>
-                <span className="text-muted-foreground"> /month</span>
-              </div>
-
-              <CardDescription>{pricing.description}</CardDescription>
+              <CardDescription style={{ margin: '2rem 0' }}>
+                {Object.entries(pricing.features).map(([key, value]) => (
+                  <p key={key}>{`${capitalizeFirstLetter(key)}: ${value}`}</p>
+                ))}
+              </CardDescription>            
             </CardHeader>
 
             <CardContent>
-              <Button className="w-full">{pricing.buttonText}</Button>
+              <Button className="w-auto">Invest Now</Button>
             </CardContent>
-
-            <hr className="w-4/5 m-auto mb-4" />
-
-            <CardFooter className="flex">
-              <div className="space-y-4">
-                {pricing.benefitList.map((benefit: string) => (
-                  <span
-                    key={benefit}
-                    className="flex"
-                  >
-                    <Check className="text-green-500" />{" "}
-                    <h3 className="ml-2">{benefit}</h3>
-                  </span>
-                ))}
-              </div>
-            </CardFooter>
           </Card>
         ))}
       </div>

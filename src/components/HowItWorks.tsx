@@ -1,73 +1,28 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { MedalIcon, MapIcon, PlaneIcon, GiftIcon } from "../components/Icons";
-
-interface FeatureProps {
-  icon: JSX.Element;
-  title: string;
-  description: string;
-}
-
-const features: FeatureProps[] = [
-  {
-    icon: <MedalIcon />,
-    title: "Accesibility",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
-  },
-  {
-    icon: <MapIcon />,
-    title: "Community",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
-  },
-  {
-    icon: <PlaneIcon />,
-    title: "Scalability",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
-  },
-  {
-    icon: <GiftIcon />,
-    title: "Gamification",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
-  },
-];
+import Chart from '../assets/chart.png';
 
 export const HowItWorks = () => {
   return (
     <section
-      id="howItWorks"
+      id="howitworks"
       className="container text-center py-24 sm:py-32"
     >
-      <h2 className="text-3xl md:text-4xl font-bold ">
+      <h2 className="text-3xl md:text-4xl font-bold mb-10">
         How It{" "}
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
           Works{" "}
         </span>
-        Step-by-Step Guide
       </h2>
       <p className="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
-        dolor pariatur sit!
+        In markets where the price of futures contracts is higher than the current market price, known as contango, investors have the opportunity to profit from this disparity.
       </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {features.map(({ icon, title, description }: FeatureProps) => (
-          <Card
-            key={title}
-            className="bg-muted/50"
-          >
-            <CardHeader>
-              <CardTitle className="grid gap-4 place-items-center">
-                {icon}
-                {title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>{description}</CardContent>
-          </Card>
-        ))}
-      </div>
+      <p className="md:w-3/4 mx-auto mt-4 mb-16 text-xl text-muted-foreground">
+        They can do this by selling futures contracts while simultaneously buying the underlying asset at its current price, thereby securing a guaranteed profit from the difference. If this position is maintained until maturity, at which point the prices converge, allowing investors to realize a profit from the difference.
+      </p>
+      <img
+        src={Chart}
+        alt="Example Chart"
+        className="mx-auto mt-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl"
+      />
     </section>
   );
 };

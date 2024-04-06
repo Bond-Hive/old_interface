@@ -6,53 +6,41 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import image from "../assets/growth.png";
-import image3 from "../assets/reflecting.png";
-import image4 from "../assets/looking-ahead.png";
+// Importing the icons
+import { FaLock, FaEye } from "react-icons/fa"; // For security and transparency icons
+import { GiMoneyStack } from "react-icons/gi"; // For yield/growth icon
 
 interface FeatureProps {
   title: string;
   description: string;
-  image: string;
+  Icon: React.ElementType; // Component type for icons
 }
 
 const features: FeatureProps[] = [
   {
-    title: "Responsive Design",
+    title: "Secured Arbitrage",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
-    image: image4,
+      "Lock in yields with Bond Hive's arbitrage strategy",
+    Icon: FaLock, // Lock icon
   },
   {
-    title: "Intuitive user interface",
+    title: "Yield Bearing Token",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
-    image: image3,
+      "Using Solana’s interest-bearing token, the yield is distributed real-time to users",
+    Icon: GiMoneyStack, // Stack of money icon
   },
   {
-    title: "AI-Powered insights",
+    title: "Transparent",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
-    image: image,
+      "All transactions are verifiable for ultimate transparency",
+    Icon: FaEye, // Eye icon
   },
-];
-
-const featureList: string[] = [
-  "Dark/Light theme",
-  "Reviews",
-  "Features",
-  "Pricing",
-  "Contact form",
-  "Our team",
-  "Responsive design",
-  "Newsletter",
-  "Minimalist",
 ];
 
 export const Features = () => {
   return (
     <section
-      id="howitworks"
+      id="features"
       className="container py-24 sm:py-32 space-y-8"
     >
       <h2 className="text-3xl lg:text-4xl font-bold md:text-center">
@@ -62,34 +50,17 @@ export const Features = () => {
         </span>
       </h2>
 
-      <div className="flex flex-wrap md:justify-center gap-4">
-        {featureList.map((feature: string) => (
-          <div key={feature}>
-            <Badge
-              variant="secondary"
-              className="text-sm"
-            >
-              {feature}
-            </Badge>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {features.map(({ title, description, image }: FeatureProps) => (
-          <Card key={title}>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {features.map(({ title, description, Icon }: FeatureProps) => (
+          <Card key={title} className="p-4 flex flex-col items-center text-center"> {/* Adjusted for center alignment */}
             <CardHeader>
               <CardTitle>{title}</CardTitle>
             </CardHeader>
 
-            <CardContent>{description}</CardContent>
+            <CardContent className="mb-4">{description}</CardContent> {/* Margin bottom for spacing */}
 
-            <CardFooter>
-              <img
-                src={image}
-                alt="About feature"
-                className="w-[200px] lg:w-[300px] mx-auto"
-              />
+            <CardFooter className="flex justify-center p-2">
+              <Icon className="w-16 h-16" />
             </CardFooter>
           </Card>
         ))}
