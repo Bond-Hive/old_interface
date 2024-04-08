@@ -1,5 +1,8 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useCallback, useEffect } from 'react';
+import Image from 'next/image';
 import { Dialog, Transition } from '@headlessui/react';
+import { useWallet, useConnection } from '@solana/wallet-adapter-react';
+import { PublicKey } from '@solana/web3.js';
 import { Button } from '@/components/ui/button';
 
 interface ModalProps {
@@ -8,74 +11,130 @@ interface ModalProps {
 }
 
 export const DepositModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+    const { connection } = useConnection();
+    const { publicKey, connected } = useWallet();
     const [selectedCurrency, setSelectedCurrency] = useState<'USDT' | 'USDC'>('USDT');
     const [amount, setAmount] = useState('');
+    const [usdtBalance, setUsdtBalance] = useState<number>(0);
+    const [usdcBalance, setUsdcBalance] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const tokenMints = {
+        'USDT': new PublicKey('Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB'),
+        'USDC': new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'),
+    };
+
+    // Determine the image source based on the selected currency
+    const currencyImageSrc = selectedCurrency === 'USDT' ? '/usdt.png' : '/usdc.png';
+
+    const fetchBalance = useCallback(async () => {
+        console.log('Fetching balance...');
+        if (!publicKey || !connection) return;
+        console.log('Connection ok...');
+
+        if (!isOpen) {
+            "Closing modal..."
+            setUsdtBalance(0);
+            setUsdcBalance(0);
+        }
+
+        if (selectedCurrency === 'USDT' && usdtBalance !== 0) return;
+        if (selectedCurrency === 'USDC' && usdcBalance !== 0) return;
+
+        try {
+            setLoading(true);
+            console.log(tokenMints[selectedCurrency]);
+            const walletTokenAccounts = await connection.getParsedTokenAccountsByOwner(publicKey, {
+                mint: tokenMints[selectedCurrency],
+            })
+            if (walletTokenAccounts && walletTokenAccounts.value && walletTokenAccounts.value.length > 0) {
+                const walletTokenAccount = walletTokenAccounts.value[0]
+                const amount = walletTokenAccount.account.data.parsed.info.tokenAmount.uiAmount
+                console.log(`amount: ${amount}`);
+                if (selectedCurrency === 'USDT') setUsdtBalance(amount);
+                if (selectedCurrency === 'USDC') setUsdcBalance(amount);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching token balance:', error);
+            if (selectedCurrency === 'USDT') setUsdtBalance(0);
+            if (selectedCurrency === 'USDC') setUsdcBalance(0);
+            setLoading(false);
+        }
+    }, [isOpen, publicKey, selectedCurrency, connection]);
+
+    useEffect(() => {
+        if (connected) {
+            fetchBalance();
+        }
+    }, [connected, fetchBalance]);
+
+    const handleMaxClick = () => {
+        const maxBalance = selectedCurrency === 'USDT' ? usdtBalance : usdcBalance;
+        setAmount(maxBalance.toString());
+    };
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-black bg-opacity-70" />
-                </Transition.Child>
+                <div className="fixed inset-0 bg-black bg-opacity-70" />
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4 text-center">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-card p-6 text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title
-                                    as="h3"
-                                    className="text-lg leading-6 font-medium text-card-foreground"
-                                >
-                                    Deposit Funds
-                                </Dialog.Title>
-                                <div className="mt-2">
-                                    <div className="my-4">
-                                        <label htmlFor="currency" className="block text-sm font-medium text-card-foreground">Currency</label>
-                                        <select
-                                            id="currency"
-                                            name="currency"
-                                            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md text-black"
-                                            value={selectedCurrency}
-                                            onChange={(e) => setSelectedCurrency(e.target.value as 'USDT' | 'USDC')}
+                        <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-card p-6 text-center align-middle shadow-xl transition-all border">
+                            <Dialog.Title as="h3" className="text-xl leading-6 font-semibold text-card-foreground">
+                                Deposit
+                                <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+                                    {" "}Funds{" "}
+                                </span>
+                            </Dialog.Title>
+                            <div className="mt-2">
+                                <div className="my-4">
+                                    <div className="flex items-center gap-2 my-2">
+                                        <label htmlFor="currency" className="block text-base font-medium text-card-foreground">Currency</label>
+                                        <Image src={currencyImageSrc} alt="Currency" width={24} height={24} />
+                                    </div>
+                                    <select
+                                        id="currency"
+                                        name="currency"
+                                        className="mt-1 block pl-3 pr-10 py-2 text-base border focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md text-black"
+                                        value={selectedCurrency}
+                                        onChange={(e) => setSelectedCurrency(e.target.value as 'USDT' | 'USDC')}
+                                    >
+                                        <option value="USDT">USDT</option>
+                                        <option value="USDC">USDC</option>
+                                    </select>
+                                </div>
+                                <div className="my-4">
+                                    <div className="flex items-center justify-between my-2">
+                                        <label htmlFor="amount" className="block text-base font-medium text-card-foreground">Amount</label>
+                                        <span
+                                            className="text-sm font-semibold cursor-pointer"
+                                            onClick={handleMaxClick}
                                         >
-                                            <option value="USDT">USDT</option>
-                                            <option value="USDC">USDC</option>
-                                        </select>
+                                            Balance: {
+                                                loading ? 'Loading...' : 
+                                                selectedCurrency === 'USDT' ?
+                                                    (Math.floor(usdtBalance * 100) / 100).toFixed(2) :
+                                                    (Math.floor(usdcBalance * 100) / 100).toFixed(2)
+                                            } {!loading && selectedCurrency}
+                                        </span>
                                     </div>
-                                    <div className="my-4">
-                                        <label htmlFor="amount" className="block text-sm font-medium text-card-foreground">Amount</label>
-                                        <input
-                                            type="text"
-                                            name="amount"
-                                            id="amount"
-                                            className="shadow-sm focus:ring-primary focus:border-primary mt-1 block w-full sm:text-sm border rounded-md text-black pl-4 py-2"
-                                            placeholder="Enter amount"
-                                            value={amount}
-                                            onChange={(e) => setAmount(e.target.value)}
-                                        />
-                                    </div>
+                                    <input
+                                        type="text"
+                                        name="amount"
+                                        id="amount"
+                                        className="shadow-sm focus:ring-primary focus:border-primary mt-1 block w-full sm:text-sm border rounded-md text-black pl-4 py-2"
+                                        placeholder="Enter amount"
+                                        value={amount}
+                                        onChange={(e) => setAmount(e.target.value)}
+                                    />
                                 </div>
-                                <div className="mt-4 flex justify-end gap-3">
-                                    <Button variant="outline" onClick={onClose}>Cancel</Button>
-                                    <Button className="text-card-foreground" onClick={() => { /* Handle confirm action here */ onClose(); }}>Confirm</Button>
-                                </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
+                            </div>
+                            <div className="mt-8 flex justify-center gap-3">
+                                <Button variant="outline" onClick={onClose}>Cancel</Button>
+                                <Button className="text-card-foreground" onClick={() => { onClose(); }}>Confirm</Button>
+                            </div>
+                        </Dialog.Panel>
                     </div>
                 </div>
             </Dialog>
