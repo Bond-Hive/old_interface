@@ -35,7 +35,7 @@ const initialPricingList: PricingProps[] = [
   {
     title: "BTC (June-24)",
     code: "BTC/USDT_240628",
-    APY: "22",
+    APY: "22.00%",
     popular: 0,
     logo: "/bitcoin.svg",
     features: {
@@ -48,7 +48,7 @@ const initialPricingList: PricingProps[] = [
   {
     title: "ETH (June-24)",
     code: "ETH/USDT_240628",
-    APY: "26",
+    APY: "26.00%",
     popular: 0,
     logo: "/ethereum.svg",
     features: {
@@ -61,7 +61,7 @@ const initialPricingList: PricingProps[] = [
   {
     title: "BTC (Sep-24)",
     code: "BTC/USDT_240927",
-    APY: "23",
+    APY: "23.00%",
     popular: 0,
     logo: "/bitcoin.svg",
     features: {
@@ -74,7 +74,7 @@ const initialPricingList: PricingProps[] = [
   {
     title: "ETH (Sep-24)",
     code: "ETH/USDT_240927",
-    APY: "30",
+    APY: "30.00%",
     popular: 0,
     logo: "/ethereum.svg",
     features: {
