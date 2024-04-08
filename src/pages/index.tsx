@@ -6,9 +6,9 @@ const Home: NextPage = (props) => {
   return (
     <div>
       <Head>
-        <title>Caw Caw!</title>
+        <title>BondHive - Maximize Your Investment Returns</title>
         <meta
-          name="Bondhive"
+          name="description"
           content="Maximize Your Investment Returns by Locking in Your Yield with Crypto Bonds"
         />
       </Head>
