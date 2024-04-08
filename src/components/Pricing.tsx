@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { DepositModal } from "@/components/DepositModal";
+import React, { useState, useEffect, useRef } from 'react';
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { DepositModal } from "@/components/DepositModal";
 import {
   Card,
   CardContent,
@@ -17,6 +17,7 @@ enum PopularPlanType {
 
 interface PricingProps {
   title: string;
+  code: string;
   popular: PopularPlanType;
   APY: string;
   logo: string;
@@ -26,12 +27,15 @@ interface PricingProps {
     underlying: string;
     depositAsset: string;
   };
+  animate?: boolean;
 }
 
-const pricingList: PricingProps[] = [
+
+const initialPricingList: PricingProps[] = [
   {
     title: "BTC (June-24)",
-    APY: "20-22",
+    code: "BTC/USDT_240628",
+    APY: "22",
     popular: 0,
     logo: "/bitcoin.svg",
     features: {
@@ -43,7 +47,8 @@ const pricingList: PricingProps[] = [
   },
   {
     title: "ETH (June-24)",
-    APY: "24-26",
+    code: "ETH/USDT_240628",
+    APY: "26",
     popular: 0,
     logo: "/ethereum.svg",
     features: {
@@ -55,7 +60,8 @@ const pricingList: PricingProps[] = [
   },
   {
     title: "BTC (Sep-24)",
-    APY: "21-23",
+    code: "BTC/USDT_240927",
+    APY: "23",
     popular: 0,
     logo: "/bitcoin.svg",
     features: {
@@ -67,7 +73,8 @@ const pricingList: PricingProps[] = [
   },
   {
     title: "ETH (Sep-24)",
-    APY: "28-30",
+    code: "ETH/USDT_240927",
+    APY: "30",
     popular: 0,
     logo: "/ethereum.svg",
     features: {
@@ -82,9 +89,48 @@ const pricingList: PricingProps[] = [
 export const Pricing = () => {
   const { publicKey } = useWallet();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pricingList, setPricingList] = useState<PricingProps[]>(initialPricingList);
+  const latestPricingListRef = useRef(initialPricingList);
+
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  const fetchAPYData = async () => {
+    try {
+      const response = await fetch('https://bondexecution.onrender.com/monitoring/getYields');
+      const newData = await response.json();
+
+      const updatedPricingList = latestPricingListRef.current.map(plan => {
+        const newAPYData = newData.find((item: { symbolFuture: string; }) => item.symbolFuture === plan.code);
+        // Determine if the APY has changed and should trigger animation.
+        const isAPYChanged = newAPYData && `${newAPYData.averageYieldPostExecution.upper}` !== plan.APY;
+        return {
+          ...plan,
+          APY: isAPYChanged ? `${newAPYData.averageYieldPostExecution.upper}` : plan.APY,
+          animate: isAPYChanged, // Set animate true only if there's a change.
+        };
+      });
+
+      setPricingList(updatedPricingList);
+      latestPricingListRef.current = updatedPricingList;
+
+      // Reset the animation flags for only those items that were animated
+      setTimeout(() => {
+        setPricingList(currentList =>
+          currentList.map(plan => plan.animate ? { ...plan, animate: false } : plan)
+        );
+      }, 1000); // Match this duration to your CSS animation duration
+    } catch (error) {
+      console.error('Failed to fetch APY data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAPYData(); // Initial fetch
+    const intervalId = setInterval(fetchAPYData, 5000); // Refetch every 5 seconds
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, []);
 
   return (
     <section
@@ -113,15 +159,17 @@ export const Pricing = () => {
                   />
                   {" "}{pricing.title}
                 </div>
-                <span>APY: {pricing.APY}%</span>
+                <span className={`${pricing.animate ? 'flashAnimation' : ''}`}>
+                  APY: {pricing.APY}
+                </span>
               </CardTitle>
-              
+
               <div style={{ margin: '2rem 0' }}>
                 {Object.entries(pricing.features).map(([key, value]) => (
                   <p key={key}>{`${capitalizeFirstLetter(key)}: ${value}`}</p>
                 ))}
               </div>
-         
+
             </CardHeader>
 
             <CardContent>
@@ -130,7 +178,7 @@ export const Pricing = () => {
                 onClick={() => setIsModalOpen(true)}
                 disabled={!publicKey}
               >
-                { publicKey ? "Invest Now" : "Connect Wallet" }
+                {publicKey ? "Invest Now" : "Connect Wallet"}
               </Button>
             </CardContent>
           </Card>

@@ -69,6 +69,20 @@ html {
   }
 }
 
+@keyframes flash {
+  0% {
+    background-color: yellow;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flashAnimation {
+  animation: flash 0.5s ease-out;
+}
+
 @media (max-width: 768px) {
   .shadow {
     top: 70px;
