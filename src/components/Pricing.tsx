@@ -120,7 +120,7 @@ export const Pricing = () => {
         setPricingList(currentList =>
           currentList.map(plan => plan.animate ? { ...plan, animate: false } : plan)
         );
-      }, 1000); // Match this duration to your CSS animation duration
+      }, 2000); // Match this duration to your CSS animation duration
     } catch (error) {
       console.error('Failed to fetch APY data:', error);
     }
