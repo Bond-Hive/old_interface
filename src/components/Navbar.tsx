@@ -13,8 +13,9 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import WalletConnectButton from "./WalletButton";
-import Logo from '../assets/logo.png';
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import Link from 'next/link';
+import Image from 'next/image';
 import { buttonVariants } from "./ui/button";
 
 interface RouteProps {
@@ -49,20 +50,17 @@ export const Navbar = () => {
       <NavigationMenu className="mx-auto">
         <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
           <NavigationMenuItem className="font-bold flex">
-            <a
-              href="/"
-              className="ml-2 font-bold text-xl flex items-center"
-            >
-              <img src={Logo} alt="Logo" className="logo" />
-              Bondhive
-            </a>
+            <Link href="/">
+              <a className="ml-2 font-bold sm:text-2xl text-base flex items-center">
+                <Image src="/logo.png" alt="Logo" className="logo" width={50} height={50} />
+                {" "} Bondhive
+              </a>
+            </Link>
           </NavigationMenuItem>
 
           {/* mobile */}
           <span className="flex md:hidden">
-            <WalletConnectButton />
-            <ModeToggle />
-
+            <WalletMultiButton className="btn btn-ghost" />
             <Sheet
               open={isOpen}
               onOpenChange={setIsOpen}
@@ -78,8 +76,10 @@ export const Navbar = () => {
 
               <SheetContent side={"left"}>
                 <SheetHeader>
-                  <SheetTitle className="font-bold text-xl">
-                    BondHive
+                  <SheetTitle className="flex items-center justify-start font-bold text-xl">
+                    <Image src="/logo.png" alt="Logo" width={30} height={30} />
+                    <span className="mx-1">BondHive</span> {/* Adjust the margin as needed */}
+                    <ModeToggle />
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col justify-center items-center gap-2 mt-4">
@@ -95,6 +95,7 @@ export const Navbar = () => {
                   ))}
                 </nav>
               </SheetContent>
+
             </Sheet>
           </span>
 
@@ -104,7 +105,7 @@ export const Navbar = () => {
               <a
                 href={route.href}
                 key={i}
-                className={`text-[17px] ${buttonVariants({
+                className={`text-lg ${buttonVariants({
                   variant: "ghost",
                 })}`}
               >
@@ -114,8 +115,7 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <WalletConnectButton />
-
+            <WalletMultiButton className="btn btn-ghost" />
             <ModeToggle />
           </div>
         </NavigationMenuList>

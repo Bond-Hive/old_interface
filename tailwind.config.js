@@ -1,6 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+// default settings can be found here
+// https://unpkg.com/browse/tailwindcss@2.2.17/stubs/defaultConfig.stub.js
+
 module.exports = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",

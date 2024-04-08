@@ -1,4 +1,4 @@
-import Chart from '../assets/chart.png';
+import Image from 'next/image';
 
 export const HowItWorks = () => {
   return (
@@ -18,9 +18,11 @@ export const HowItWorks = () => {
       <p className="md:w-3/4 mx-auto mt-4 mb-16 text-xl text-muted-foreground">
         They can do this by selling futures contracts while simultaneously buying the underlying asset at its current price, thereby securing a guaranteed profit from the difference. If this position is maintained until maturity, at which point the prices converge, allowing investors to realize a profit from the difference.
       </p>
-      <img
-        src={Chart}
+      <Image
+        src="/chart.png"
         alt="Example Chart"
+        width={700} 
+        height={400}
         className="mx-auto mt-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl"
       />
     </section>
