@@ -96,11 +96,13 @@ export const Pricing = () => {
                 {pricing.title}
                 <span>APY: {pricing.APY}%</span>
               </CardTitle>
-              <CardDescription style={{ margin: '2rem 0' }}>
+              
+              <div style={{ margin: '2rem 0' }}>
                 {Object.entries(pricing.features).map(([key, value]) => (
                   <p key={key}>{`${capitalizeFirstLetter(key)}: ${value}`}</p>
                 ))}
-              </CardDescription>            
+              </div>
+         
             </CardHeader>
 
             <CardContent>
