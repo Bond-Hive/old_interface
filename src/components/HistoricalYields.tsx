@@ -25,7 +25,7 @@ export const HistoricalYields = () => {
           For a closer look, please visit our Dune Analytics dashboard. Summarizing, ETH and BTC bonds have shown promising average yields of 13.61% and 16.42% for ETH, and 13.75% and 15.69% for BTC, over the past six months.
         </p>
         <div className="w-full flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
-          <Button className="w-full md:w-auto" onClick={handleButtonClick}>
+          <Button className="w-full md:w-auto text-accent-foreground" onClick={handleButtonClick}>
             Dune Dashboard
           </Button>
         </div>

@@ -109,7 +109,7 @@ export const Pricing = () => {
 
             <CardContent>
               <Button
-                className="w-auto"
+                className="w-auto text-accent-foreground"
                 onClick={() => setIsModalOpen(true)}
               >
                 Invest Now

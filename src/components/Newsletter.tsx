@@ -20,7 +20,7 @@ export const Newsletter = () => {
           {" "} collaboration or integrate in your app?
         </h3>
         <div className="flex justify-center mt-16">
-          <Button className="w-auto" onClick={handleEmailButtonClick}>Get In Touch</Button>
+          <Button className="w-auto text-accent-foreground" onClick={handleEmailButtonClick}>Get In Touch</Button>
         </div>
       </div>
 
