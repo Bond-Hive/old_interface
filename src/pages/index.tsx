@@ -8,8 +8,8 @@ const Home: NextPage = (props) => {
       <Head>
         <title>Caw Caw!</title>
         <meta
-          name="description"
-          content="This site will fly high 🦤"
+          name="Bondhive"
+          content="Maximize Your Investment Returns by Locking in Your Yield with Crypto Bonds"
         />
       </Head>
       <HomeView />

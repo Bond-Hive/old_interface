@@ -1,46 +1,24 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
-          <meta
-            name="description"
-            content="This site will fly high 🦤"
-          />
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="description" content="BondHive - Lock in Your Yield with Crypto Bonds" />
           <link rel="icon" href="/favicon.ico" />
-
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/apple-touch-icon.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicon-32x32.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/favicon-16x16.png"
-          />
-          <link rel="manifest" href="/site.webmanifest" />
-          {/* <meta name="theme-color" content="#ffffff" /> */}
-
-          {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="crossOrigin"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500&display=swap"
-            rel="stylesheet"
-          /> */}
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="manifest" href="/manifest.json" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="BondHive" />
+          <meta property="og:description" content="Lock in Your Yield with Crypto Bonds." />
+          <meta property="og:url" content="https://bondhive.xyz" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:creator" content="@bondhive" />
+          <meta name="twitter:title" content="BondHive" />
+          <meta name="twitter:description" content="Lock in Your Yield with Crypto Bonds." />
         </Head>
         <body>
           <Main />
@@ -52,3 +30,4 @@ class MyDocument extends Document {
 }
 
 export default MyDocument;
+
