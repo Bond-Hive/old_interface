@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { DepositModal } from "@/components/DepositModal";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -72,6 +73,7 @@ const pricingList: PricingProps[] = [
 ];
 
 export const Pricing = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
@@ -106,11 +108,17 @@ export const Pricing = () => {
             </CardHeader>
 
             <CardContent>
-              <Button className="w-auto">Invest Now</Button>
+              <Button
+                className="w-auto"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Invest Now
+              </Button>
             </CardContent>
           </Card>
         ))}
       </div>
+      <DepositModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 };
