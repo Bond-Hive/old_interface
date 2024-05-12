@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useWallet } from "@solana/wallet-adapter-react";
+//import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { DepositModal } from "@/components/DepositModal";
@@ -87,7 +87,7 @@ const initialPricingList: PricingProps[] = [
 ];
 
 export const Pricing = () => {
-  const { publicKey } = useWallet();
+  //const { publicKey } = useWallet();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pricingList, setPricingList] = useState<PricingProps[]>(initialPricingList);
   const latestPricingListRef = useRef(initialPricingList);
@@ -176,9 +176,9 @@ export const Pricing = () => {
               <Button
                 className="w-auto text-accent-foreground"
                 onClick={() => setIsModalOpen(true)}
-                disabled={!publicKey}
+                //disabled={!publicKey}
               >
-                {publicKey ? "Invest Now" : "Connect Wallet"}
+                Invest Now
               </Button>
             </CardContent>
           </Card>

@@ -25,7 +25,7 @@ const features: FeatureProps[] = [
   {
     title: "Yield Bearing Token",
     description:
-      "Using Solana’s interest-bearing token, the yield is distributed real-time to users",
+      "Interest-bearing tokens allow for real-time distribution of yield to users.",
     Icon: GiMoneyStack, // Stack of money icon
   },
   {

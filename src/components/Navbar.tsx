@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+//import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Link from 'next/link';
 import Image from 'next/image';
 import { buttonVariants } from "./ui/button";
@@ -60,7 +60,7 @@ export const Navbar = () => {
 
           {/* mobile */}
           <span className="flex md:hidden">
-            <WalletMultiButton className="btn btn-ghost" />
+            {/* <WalletMultiButton className="btn btn-ghost" /> */}
             <Sheet
               open={isOpen}
               onOpenChange={setIsOpen}
@@ -115,7 +115,7 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <WalletMultiButton className="btn btn-ghost" />
+            {/*<WalletMultiButton className="btn btn-ghost" />*/}
             <ModeToggle />
           </div>
         </NavigationMenuList>

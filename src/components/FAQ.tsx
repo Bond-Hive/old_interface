@@ -27,7 +27,7 @@ const FAQList: FAQProps[] = [
     question:
       "What do I receive to claim my investment?",
     answer:
-      "You'll receive yield-bearing tokens that accrue value over time, similar to a bond. These tokens are based on the Solana blockchain and represent your growing investment.",
+      "You'll receive yield-bearing tokens that accrue value over time, similar to a bond. These tokens represent your growing investment.",
     value: "item-3",
   },
   {
